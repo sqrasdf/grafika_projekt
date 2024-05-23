@@ -175,6 +175,7 @@
     <Image Include="tex2.jpg" />
     <Image Include="tex3.jpg" />
     <Image Include="tex4.jpg" />
+    <Image Include="tex5.jpg" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

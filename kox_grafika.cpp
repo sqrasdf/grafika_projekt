@@ -120,7 +120,7 @@ int main()
 	float obrot3 = PI / 9;
 	float obrot4 = PI / 9;
 
-	GLuint texture1 = LoadTexture("tex.jpg");
+	GLuint texture1 = LoadTexture("tex5.jpg");
 
 	while (!glfwWindowShouldClose(window))
 	{

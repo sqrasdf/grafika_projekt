@@ -87,5 +87,8 @@
     <Image Include="tex4.jpg">
       <Filter>Pliki zasobów</Filter>
     </Image>
+    <Image Include="tex5.jpg">
+      <Filter>Pliki zasobów</Filter>
+    </Image>
   </ItemGroup>
 </Project>
