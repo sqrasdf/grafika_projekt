@@ -75,7 +75,16 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="texture.jpg">
+    <Image Include="tex.jpg">
+      <Filter>Pliki zasobów</Filter>
+    </Image>
+    <Image Include="tex2.jpg">
+      <Filter>Pliki zasobów</Filter>
+    </Image>
+    <Image Include="tex3.jpg">
+      <Filter>Pliki zasobów</Filter>
+    </Image>
+    <Image Include="tex4.jpg">
       <Filter>Pliki zasobów</Filter>
     </Image>
   </ItemGroup>

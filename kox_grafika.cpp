@@ -7,6 +7,9 @@
 #include<glm/gtc/matrix_transform.hpp>
 #include<glm/gtc/type_ptr.hpp>
 
+#include <stb/stb_image.h>
+
+
 
 #include"Texture.h"
 #include"shaderClass.h"
@@ -28,6 +31,42 @@ const unsigned int width = 800;
 const unsigned int height = 800;
 
 int obiekty = 0;
+
+
+
+GLuint LoadTexture(const char* filename) {
+	GLuint textureID;
+	glGenTextures(1, &textureID);
+	glBindTexture(GL_TEXTURE_2D, textureID);
+
+	// Załaduj obraz, stwórz teksturę i generuj mipmapy
+	int width, height, nrChannels;
+	unsigned char* data = stbi_load(filename, &width, &height, &nrChannels, 0);
+	if (data) {
+		GLenum format;
+		if (nrChannels == 1)
+			format = GL_RED;
+		else if (nrChannels == 3)
+			format = GL_RGB;
+		else if (nrChannels == 4)
+			format = GL_RGBA;
+
+		glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, data);
+		glGenerateMipmap(GL_TEXTURE_2D);
+	}
+	else {
+		std::cout << "Failed to load texture" << std::endl;
+	}
+	stbi_image_free(data);
+
+	// Ustaw parametry tekstury
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+	return textureID;
+}
 
 int main()
 {
@@ -73,7 +112,7 @@ int main()
 
 	float x1 = -0.46f, y1 = -0.55f;
 	float x2 = 0.46f, y2 = -0.45f; //WSPOLRZEDNE ZEBATEK
-	float x3 = 0.68f, y3 = -1.27f;
+	float x3 = 0.68f, y3 = -1.25f;
 
 
 	float obrot = PI / 64;
@@ -81,7 +120,7 @@ int main()
 	float obrot3 = PI / 9;
 	float obrot4 = PI / 9;
 
-
+	GLuint texture1 = LoadTexture("tex.jpg");
 
 	while (!glfwWindowShouldClose(window))
 	{
@@ -99,7 +138,7 @@ int main()
 		stworz_zebatke(vertices, indices, (((NUMER_WIERZCHOLKOW + 1) * 8) + (NUMER_WIERZCHOLKOW * 8)) * 4, (NUMER_WIERZCHOLKOW * 2 * 3 * 2 + (3 * NUMER_WIERZCHOLKOW) + (6 * NUMER_WIERZCHOLKOW) + (3 * NUMER_WIERZCHOLKOW)) * 2, x3, y3, 1.0f, 1.0f, 0.0f, promien2, obrot3);
 
 
-		stworz_kolo(vertices, indices, (((NUMER_WIERZCHOLKOW + 1) * 8) + (NUMER_WIERZCHOLKOW * 8)) * 6, (NUMER_WIERZCHOLKOW * 2 * 3 * 2 + (3 * NUMER_WIERZCHOLKOW) + (6 * NUMER_WIERZCHOLKOW) + (3 * NUMER_WIERZCHOLKOW)) * 3, x1, y1, 0.0f, 0.0f, 0.0f, 0.1f, 10, obrot, 3, 0);
+		stworz_kolo(vertices, indices, (((NUMER_WIERZCHOLKOW + 1) * 8) + (NUMER_WIERZCHOLKOW * 8)) * 6, (NUMER_WIERZCHOLKOW * 2 * 3 * 2 + (3 * NUMER_WIERZCHOLKOW) + (6 * NUMER_WIERZCHOLKOW) + (3 * NUMER_WIERZCHOLKOW)) * 3, x1, y1, 0.0f, 0.0f, 0.0f, 0.2f, 10, obrot, 3, 0);
 		stworz_kolo(vertices, indices, (((NUMER_WIERZCHOLKOW + 1) * 8) + (NUMER_WIERZCHOLKOW * 8)) * 6 + ((NUMER_WIERZCHOLKOW + 1) * 8 * 2), (NUMER_WIERZCHOLKOW * 2 * 3 * 2 + (3 * NUMER_WIERZCHOLKOW) + (6 * NUMER_WIERZCHOLKOW) + (3 * NUMER_WIERZCHOLKOW)) * 3 + (NUMER_WIERZCHOLKOW * 4) * 3, x2, y2, 0.0f, 0.0f, 0.0f, 0.2f, 10, obrot2, 3, 1);
 		stworz_kolo(vertices, indices, (((NUMER_WIERZCHOLKOW + 1) * 8) + (NUMER_WIERZCHOLKOW * 8)) * 6 + ((NUMER_WIERZCHOLKOW + 1) * 8 * 2) * 2, (NUMER_WIERZCHOLKOW * 2 * 3 * 2 + (3 * NUMER_WIERZCHOLKOW) + (6 * NUMER_WIERZCHOLKOW) + (3 * NUMER_WIERZCHOLKOW)) * 3 + (NUMER_WIERZCHOLKOW * 4) * 6, x3, y3, 0.0f, 0.0f, 0.0f, 0.15f, 10, obrot3, 3, 2);
 
@@ -109,13 +148,13 @@ int main()
 
 		VAO1.LinkAttrib(VBO1, 0, 3, GL_FLOAT, 8 * sizeof(float), (void*)0);
 		VAO1.LinkAttrib(VBO1, 1, 3, GL_FLOAT, 8 * sizeof(float), (void*)(3 * sizeof(float)));
-		VAO1.LinkAttrib(VBO1, 2, 3, GL_FLOAT, 8 * sizeof(float), (void*)(6 * sizeof(float)));
+		VAO1.LinkAttrib(VBO1, 2, 2, GL_FLOAT, 8 * sizeof(float), (void*)(6 * sizeof(float)));
 
 		VAO1.Unbind();
 		VBO1.Unbind();
 		EBO1.Unbind();
 
-		glClearColor(0.10f, 0.1f, 0.1f, 1.0f);
+		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -124,6 +163,10 @@ int main()
 		camera.Inputs(window);
 
 		camera.Matrix(45.0f, 0.1f, 100.0f, shaderProgram, "camMatrix");
+
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, texture1);
+		shaderProgram.setInt("texture1", 0);
 
 		VAO1.Bind();
 
@@ -164,7 +207,7 @@ void stworz_zebatke(GLfloat vertices[], GLuint elements[], int poczatkowy_punkt_
 	vertices[licznik] = kolor_x; licznik++; //WPROWADZENIE KOORDYNATOW PUNKTU W SRODKU KOLA ABY LATWIEJ RYSOWALO SIE TROJKATY
 	vertices[licznik] = kolor_y; licznik++;
 	vertices[licznik] = kolor_z; licznik++;
-	vertices[licznik] = 0.0f; licznik++;
+	vertices[licznik] = 1.0f; licznik++;
 	vertices[licznik] = 0.0f; licznik++; //textcord ktore nie sa potrzebne jezeli kolorujemy shaderami
 
 
@@ -176,8 +219,10 @@ void stworz_zebatke(GLfloat vertices[], GLuint elements[], int poczatkowy_punkt_
 		vertices[licznik] = kolor_x; licznik++;
 		vertices[licznik] = kolor_y; licznik++;
 		vertices[licznik] = kolor_z; licznik++;
-		vertices[licznik] = 0.0f; licznik++;
-		vertices[licznik] = 0.0f; licznik++; //textcord ktore nie sa potrzebne jezeli kolorujemy shaderami
+		//vertices[licznik] = 0.0f; licznik++;
+		//vertices[licznik] = 0.0f; licznik++; //textcord ktore nie sa potrzebne jezeli kolorujemy shaderami
+		vertices[licznik] = (cos(i + obrot) + 1) / 2; licznik++;
+		vertices[licznik] = (sin(i + obrot) + 1) / 2; licznik++;
 	}
 
 	int pom = 0;

@@ -171,7 +171,10 @@
     <None Include="default.vert" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="texture.jpg" />
+    <Image Include="tex.jpg" />
+    <Image Include="tex2.jpg" />
+    <Image Include="tex3.jpg" />
+    <Image Include="tex4.jpg" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
