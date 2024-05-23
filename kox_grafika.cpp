@@ -7,6 +7,7 @@
 #include<glm/gtc/matrix_transform.hpp>
 #include<glm/gtc/type_ptr.hpp>
 
+
 #include"Texture.h"
 #include"shaderClass.h"
 #include"VAO.h"
@@ -16,7 +17,7 @@
 
 #define PI 3.14159265358979323846
 
-#define NUMER_WIERZCHOLKOW 30
+#define NUMER_WIERZCHOLKOW 20
 
 using namespace std;
 
@@ -38,7 +39,7 @@ int main()
 
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-	GLFWwindow* window = glfwCreateWindow(width, height, "Okno OpenGL", NULL, NULL);
+	GLFWwindow* window = glfwCreateWindow(800, 800, "Okno OpenGL", NULL, NULL);
 
 	if (window == NULL)
 	{
@@ -62,7 +63,7 @@ int main()
 
 	glEnable(GL_DEPTH_TEST);
 
-	Camera camera(width, height, glm::vec3(0.0f, 0.0f, 2.0f));
+	Camera camera(width, height, glm::vec3(0.0f, -1.0f, 5.0f));
 
 	float promien = 0.4f;
 	float promien2 = 0.3f;
@@ -70,13 +71,16 @@ int main()
 	int licznik = 5;
 	int licznik_elements = 0;
 
-	float x1 = -0.46f, y1 = -0.45f;
+	float x1 = -0.46f, y1 = -0.55f;
 	float x2 = 0.46f, y2 = -0.45f; //WSPOLRZEDNE ZEBATEK
-	float x3 = 0.41f, y3 = 0.38f;
+	float x3 = 0.68f, y3 = -1.27f;
+
 
 	float obrot = PI / 64;
 	float obrot2 = PI / 19; //TUTAJ MOZNA SYNCHRONIZOWAC FAZE KOL ZEBATYCH
 	float obrot3 = PI / 9;
+	float obrot4 = PI / 9;
+
 
 
 	while (!glfwWindowShouldClose(window))
@@ -94,9 +98,11 @@ int main()
 		stworz_zebatke(vertices, indices, (((NUMER_WIERZCHOLKOW + 1) * 8) + (NUMER_WIERZCHOLKOW * 8)) * 2, NUMER_WIERZCHOLKOW * 2 * 3 * 2 + (3 * NUMER_WIERZCHOLKOW) + (6 * NUMER_WIERZCHOLKOW) + (3 * NUMER_WIERZCHOLKOW), x2, y2, 1.0f, 0.0f, 0.0f, promien, obrot2);
 		stworz_zebatke(vertices, indices, (((NUMER_WIERZCHOLKOW + 1) * 8) + (NUMER_WIERZCHOLKOW * 8)) * 4, (NUMER_WIERZCHOLKOW * 2 * 3 * 2 + (3 * NUMER_WIERZCHOLKOW) + (6 * NUMER_WIERZCHOLKOW) + (3 * NUMER_WIERZCHOLKOW)) * 2, x3, y3, 1.0f, 1.0f, 0.0f, promien2, obrot3);
 
+
 		stworz_kolo(vertices, indices, (((NUMER_WIERZCHOLKOW + 1) * 8) + (NUMER_WIERZCHOLKOW * 8)) * 6, (NUMER_WIERZCHOLKOW * 2 * 3 * 2 + (3 * NUMER_WIERZCHOLKOW) + (6 * NUMER_WIERZCHOLKOW) + (3 * NUMER_WIERZCHOLKOW)) * 3, x1, y1, 0.0f, 0.0f, 0.0f, 0.1f, 10, obrot, 3, 0);
 		stworz_kolo(vertices, indices, (((NUMER_WIERZCHOLKOW + 1) * 8) + (NUMER_WIERZCHOLKOW * 8)) * 6 + ((NUMER_WIERZCHOLKOW + 1) * 8 * 2), (NUMER_WIERZCHOLKOW * 2 * 3 * 2 + (3 * NUMER_WIERZCHOLKOW) + (6 * NUMER_WIERZCHOLKOW) + (3 * NUMER_WIERZCHOLKOW)) * 3 + (NUMER_WIERZCHOLKOW * 4) * 3, x2, y2, 0.0f, 0.0f, 0.0f, 0.2f, 10, obrot2, 3, 1);
 		stworz_kolo(vertices, indices, (((NUMER_WIERZCHOLKOW + 1) * 8) + (NUMER_WIERZCHOLKOW * 8)) * 6 + ((NUMER_WIERZCHOLKOW + 1) * 8 * 2) * 2, (NUMER_WIERZCHOLKOW * 2 * 3 * 2 + (3 * NUMER_WIERZCHOLKOW) + (6 * NUMER_WIERZCHOLKOW) + (3 * NUMER_WIERZCHOLKOW)) * 3 + (NUMER_WIERZCHOLKOW * 4) * 6, x3, y3, 0.0f, 0.0f, 0.0f, 0.15f, 10, obrot3, 3, 2);
+
 		VBO VBO1(vertices, sizeof(vertices));
 
 		EBO EBO1(indices, sizeof(indices));
@@ -109,7 +115,7 @@ int main()
 		VBO1.Unbind();
 		EBO1.Unbind();
 
-		glClearColor(0.00f, 0.0f, 0.0f, 1.0f);
+		glClearColor(0.10f, 0.1f, 0.1f, 1.0f);
 
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
