@@ -6,10 +6,7 @@
 #include<glm/glm.hpp>
 #include<glm/gtc/matrix_transform.hpp>
 #include<glm/gtc/type_ptr.hpp>
-
 #include <stb/stb_image.h>
-
-
 
 #include"Texture.h"
 #include"shaderClass.h"
@@ -68,66 +65,49 @@ GLuint LoadTexture(const char* filename) {
 	return textureID;
 }
 
-int main()
-{
-	// Initialize GLFW
+int main() {
 	glfwInit();
-
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
 	GLFWwindow* window = glfwCreateWindow(800, 800, "Okno OpenGL", NULL, NULL);
-
-	if (window == NULL)
-	{
+	if (window == NULL) {
 		std::cout << "Failed to create GLFW window" << std::endl;
 		glfwTerminate();
 		return -1;
 	}
 
 	glfwMakeContextCurrent(window);
-
-	//Load GLAD so it configures OpenGL
 	gladLoadGL();
-
 	glViewport(0, 0, width, height);
 
 	Shader shaderProgram("default.vert", "default.frag");
 
-
 	VAO VAO1;
 	VAO1.Bind();
-
 	glEnable(GL_DEPTH_TEST);
 
 	Camera camera(width, height, glm::vec3(0.0f, -1.0f, 5.0f));
 
 	float promien = 0.4f;
 	float promien2 = 0.3f;
-
-	int licznik = 5;
-	int licznik_elements = 0;
-
 	float x1 = -0.46f, y1 = -0.55f;
-	float x2 = 0.46f, y2 = -0.45f; //WSPOLRZEDNE ZEBATEK
+	float x2 = 0.46f, y2 = -0.45f;
 	float x3 = 0.68f, y3 = -1.25f;
-
-
 	float obrot = PI / 64;
-	float obrot2 = PI / 19; //TUTAJ MOZNA SYNCHRONIZOWAC FAZE KOL ZEBATYCH
+	float obrot2 = PI / 19;
 	float obrot3 = PI / 9;
 	float obrot4 = PI / 9;
 
-	GLuint texture1 = LoadTexture("tex5.jpg");
+	GLuint texture1 = LoadTexture("tex.jpg");
 
-	while (!glfwWindowShouldClose(window))
-	{
+	// Lighting settings
+	glm::vec3 lightPos(1.2f, 1.0f, 2.0f);
+
+	while (!glfwWindowShouldClose(window)) {
 		GLfloat vertices[(((NUMER_WIERZCHOLKOW + 1) * 8) + (NUMER_WIERZCHOLKOW * 8)) * 80];
-
 		GLuint indices[(NUMER_WIERZCHOLKOW * 2 * 3 * 2 + 3 * NUMER_WIERZCHOLKOW + 6 * NUMER_WIERZCHOLKOW + 3 * NUMER_WIERZCHOLKOW) * 80];
-		//razy dwa bo trzeba zrobic kolko plus zebatki czyli razem 20 trojkatow, razy trzy bo kazdy trojkat ma 3 punkty do polaczenia (razem 60)
 
 		obrot = obrot + (PI / 64);
 		obrot2 = obrot2 - (PI / 64);
@@ -137,13 +117,11 @@ int main()
 		stworz_zebatke(vertices, indices, (((NUMER_WIERZCHOLKOW + 1) * 8) + (NUMER_WIERZCHOLKOW * 8)) * 2, NUMER_WIERZCHOLKOW * 2 * 3 * 2 + (3 * NUMER_WIERZCHOLKOW) + (6 * NUMER_WIERZCHOLKOW) + (3 * NUMER_WIERZCHOLKOW), x2, y2, 1.0f, 0.0f, 0.0f, promien, obrot2);
 		stworz_zebatke(vertices, indices, (((NUMER_WIERZCHOLKOW + 1) * 8) + (NUMER_WIERZCHOLKOW * 8)) * 4, (NUMER_WIERZCHOLKOW * 2 * 3 * 2 + (3 * NUMER_WIERZCHOLKOW) + (6 * NUMER_WIERZCHOLKOW) + (3 * NUMER_WIERZCHOLKOW)) * 2, x3, y3, 1.0f, 1.0f, 0.0f, promien2, obrot3);
 
-
 		stworz_kolo(vertices, indices, (((NUMER_WIERZCHOLKOW + 1) * 8) + (NUMER_WIERZCHOLKOW * 8)) * 6, (NUMER_WIERZCHOLKOW * 2 * 3 * 2 + (3 * NUMER_WIERZCHOLKOW) + (6 * NUMER_WIERZCHOLKOW) + (3 * NUMER_WIERZCHOLKOW)) * 3, x1, y1, 0.0f, 0.0f, 0.0f, 0.2f, 10, obrot, 3, 0);
 		stworz_kolo(vertices, indices, (((NUMER_WIERZCHOLKOW + 1) * 8) + (NUMER_WIERZCHOLKOW * 8)) * 6 + ((NUMER_WIERZCHOLKOW + 1) * 8 * 2), (NUMER_WIERZCHOLKOW * 2 * 3 * 2 + (3 * NUMER_WIERZCHOLKOW) + (6 * NUMER_WIERZCHOLKOW) + (3 * NUMER_WIERZCHOLKOW)) * 3 + (NUMER_WIERZCHOLKOW * 4) * 3, x2, y2, 0.0f, 0.0f, 0.0f, 0.2f, 10, obrot2, 3, 1);
 		stworz_kolo(vertices, indices, (((NUMER_WIERZCHOLKOW + 1) * 8) + (NUMER_WIERZCHOLKOW * 8)) * 6 + ((NUMER_WIERZCHOLKOW + 1) * 8 * 2) * 2, (NUMER_WIERZCHOLKOW * 2 * 3 * 2 + (3 * NUMER_WIERZCHOLKOW) + (6 * NUMER_WIERZCHOLKOW) + (3 * NUMER_WIERZCHOLKOW)) * 3 + (NUMER_WIERZCHOLKOW * 4) * 6, x3, y3, 0.0f, 0.0f, 0.0f, 0.15f, 10, obrot3, 3, 2);
 
 		VBO VBO1(vertices, sizeof(vertices));
-
 		EBO EBO1(indices, sizeof(indices));
 
 		VAO1.LinkAttrib(VBO1, 0, 3, GL_FLOAT, 8 * sizeof(float), (void*)0);
@@ -155,41 +133,38 @@ int main()
 		EBO1.Unbind();
 
 		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		shaderProgram.Activate();
-
 		camera.Inputs(window);
-
 		camera.Matrix(45.0f, 0.1f, 100.0f, shaderProgram, "camMatrix");
 
 		glActiveTexture(GL_TEXTURE0);
 		glBindTexture(GL_TEXTURE_2D, texture1);
 		shaderProgram.setInt("texture1", 0);
 
-		VAO1.Bind();
+		// Set light and view positions
+		shaderProgram.setVec3("lightPos", lightPos);
+		shaderProgram.setVec3("viewPos", camera.Position);
+		shaderProgram.setVec3("lightColor", glm::vec3(1.0f, 1.0f, 1.0f));
+		shaderProgram.setVec3("objectColor", glm::vec3(1.0f, 0.5f, 0.31f));
 
+		VAO1.Bind();
 		glDrawElements(GL_TRIANGLES, sizeof(indices) / sizeof(int), GL_UNSIGNED_INT, 0);
 
 		glfwSwapBuffers(window);
-
 		glfwPollEvents();
 
-		Sleep(16); //60 KLATEK NA SEKUNDE
+		Sleep(16); // 60 FPS
 	}
 
 	VAO1.Delete();
-	//VBO1.Delete();
-	//EBO1.Delete();
-
 	shaderProgram.Delete();
-
 	glfwDestroyWindow(window);
-
 	glfwTerminate();
 	return 0;
 }
+
 
 void stworz_zebatke(GLfloat vertices[], GLuint elements[], int poczatkowy_punkt_vertices, int poczatkowy_punkt_elements, float x, float y, float kolor_x, float kolor_y, float kolor_z, float promien, float obrot)
 {
@@ -219,8 +194,6 @@ void stworz_zebatke(GLfloat vertices[], GLuint elements[], int poczatkowy_punkt_
 		vertices[licznik] = kolor_x; licznik++;
 		vertices[licznik] = kolor_y; licznik++;
 		vertices[licznik] = kolor_z; licznik++;
-		//vertices[licznik] = 0.0f; licznik++;
-		//vertices[licznik] = 0.0f; licznik++; //textcord ktore nie sa potrzebne jezeli kolorujemy shaderami
 		vertices[licznik] = (cos(i + obrot) + 1) / 2; licznik++;
 		vertices[licznik] = (sin(i + obrot) + 1) / 2; licznik++;
 	}

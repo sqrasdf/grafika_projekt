@@ -8,6 +8,9 @@
 #include<iostream>
 #include<cerrno>
 
+#include <glad/glad.h>
+#include <glm/glm.hpp>
+
 std::string get_file_contents(const char* filename);
 
 class Shader
@@ -24,6 +27,11 @@ public:
 	void Delete();
 
 	void setInt(const std::string& name, int value);
+	void setVec3(const std::string& name, const glm::vec3& value) const;
+	void setVec3(const std::string& name, float x, float y, float z) const;
+	void setVec4(const std::string& name, const glm::vec4& value) const;
+	void setVec4(const std::string& name, float x, float y, float z, float w) const;
+	void setFloat(const std::string& name, float value) const;
 private:
 	// Checks if the different Shaders have compiled properly
 	void compileErrors(unsigned int shader, const char* type);
