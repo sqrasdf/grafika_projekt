@@ -24,6 +24,7 @@
     <ProjectGuid>{1f81a519-3efe-4956-980a-52d4ce73d920}</ProjectGuid>
     <RootNamespace>koxgrafika</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>grafika_projekt</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -149,18 +150,19 @@
   <ItemGroup>
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="EBO.cpp" />
+    <ClCompile Include="Functions.cpp" />
     <ClCompile Include="glad.c" />
-    <ClCompile Include="kox_grafika.cpp" />
+    <ClCompile Include="main.cpp" />
     <ClCompile Include="ShaderClass.cpp" />
     <ClCompile Include="stb.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="VAO.cpp" />
     <ClCompile Include="VBO.cpp" />
-    <ClCompile Include="yoo.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h" />
     <ClInclude Include="EBO.h" />
+    <ClInclude Include="Functions.h" />
     <ClInclude Include="ShaderClass.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="VAO.h" />
@@ -172,9 +174,6 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="tex.jpg" />
-    <Image Include="tex2.jpg" />
-    <Image Include="tex3.jpg" />
-    <Image Include="tex4.jpg" />
     <Image Include="tex5.jpg" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

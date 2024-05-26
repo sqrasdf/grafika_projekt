@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="kox_grafika.cpp">
+    <ClCompile Include="main.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
     <ClCompile Include="glad.c">
@@ -30,9 +30,6 @@
     <ClCompile Include="ShaderClass.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
-    <ClCompile Include="stb.cpp">
-      <Filter>Pliki źródłowe</Filter>
-    </ClCompile>
     <ClCompile Include="Texture.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
@@ -42,7 +39,10 @@
     <ClCompile Include="VBO.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
-    <ClCompile Include="yoo.cpp">
+    <ClCompile Include="stb.cpp">
+      <Filter>Pliki źródłowe</Filter>
+    </ClCompile>
+    <ClCompile Include="Functions.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
   </ItemGroup>
@@ -65,6 +65,9 @@
     <ClInclude Include="VBO.h">
       <Filter>Pliki nagłówkowe</Filter>
     </ClInclude>
+    <ClInclude Include="Functions.h">
+      <Filter>Pliki nagłówkowe</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="default.frag">
@@ -76,15 +79,6 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="tex.jpg">
-      <Filter>Pliki zasobów</Filter>
-    </Image>
-    <Image Include="tex2.jpg">
-      <Filter>Pliki zasobów</Filter>
-    </Image>
-    <Image Include="tex3.jpg">
-      <Filter>Pliki zasobów</Filter>
-    </Image>
-    <Image Include="tex4.jpg">
       <Filter>Pliki zasobów</Filter>
     </Image>
     <Image Include="tex5.jpg">
