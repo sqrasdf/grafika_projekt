@@ -51,7 +51,7 @@ int main() {
 	VAO1.Bind();
 	glEnable(GL_DEPTH_TEST);
 
-	Camera camera(width, height, glm::vec3(0.0f, -1.0f, 5.0f));
+	Camera camera(width, height, glm::vec3(0.0f, -1.0f, -5.0f));
 
 	float radius = 0.4f;
 	float radius2 = 0.3f;
